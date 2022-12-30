@@ -5,10 +5,10 @@ class App extends Component {
   // ES7 class - no need for constructor
   state = {
     monsters: [
-      { name: "Dracula" },
-      { name: "Frankenstein" },
-      { name: "Mummy" },
-      { name: "Ghost" },
+      { name: "Dracula", id: "123acde" },
+      { name: "Frankenstein", id: "123wfwe" },
+      { name: "Mummy", id: "123aeget" },
+      { name: "Ghost", id: "1235rhb" },
     ],
   };
 
@@ -16,7 +16,9 @@ class App extends Component {
     return (
       <div className="App">
         {this.state.monsters.map((monster) => (
-          <h1>{monster.name}</h1>
+          <div key={monster.id}>
+            <h1>{monster.name}</h1>
+          </div>
         ))}
       </div>
     );
