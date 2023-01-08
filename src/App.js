@@ -1,6 +1,7 @@
 import "./App.css";
 import { Component } from "react";
 import CardList from "./components/card-list/card-list.component";
+import SearchBox from "./components/search-box/search-box.component";
 
 class App extends Component {
   // ES7 class - no need for constructor
@@ -31,7 +32,7 @@ class App extends Component {
   };
 
   render() {
-    console.log("render");
+    console.log("render from AppJS");
 
     const { monsters, searchText } = this.state;
     const { handleSearchInputChange } = this;
@@ -45,13 +46,8 @@ class App extends Component {
 
     return (
       <div className="App">
-        <input
-          className="search-box"
-          type="search"
-          placeholder="search monsters"
-          value={searchText}
-          onChange={handleSearchInputChange}
-        />
+
+        <SearchBox placeHolder={"search monsters"} onChange={handleSearchInputChange} value={searchText} />
         <CardList items={monstersFound} />
       </div>
     );
