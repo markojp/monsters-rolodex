@@ -1,5 +1,6 @@
 import "./App.css";
 import { Component } from "react";
+import CardList from "./components/card-list/card-list.component";
 
 class App extends Component {
   // ES7 class - no need for constructor
@@ -9,16 +10,13 @@ class App extends Component {
   };
 
   componentDidMount() {
-    console.log("componentDidMount");
+    //console.log("componentDidMount");
     fetch("https://jsonplaceholder.typicode.com/users")
       .then((response) => response.json())
       .then((users) => {
         this.setState(
           () => {
             return { monsters: users };
-          },
-          () => {
-            console.log(this.state);
           }
         );
       });
@@ -26,7 +24,7 @@ class App extends Component {
 
   handleSearchInputChange = (event) => {
     const searchText = event.target.value.toLocaleLowerCase();
-    console.log("handleSearchInputChange: " + searchText);
+    //console.log("handleSearchInputChange: " + searchText);
     this.setState(() => {
       return { searchText };
     });
@@ -43,12 +41,7 @@ class App extends Component {
       // broader search using includes
     );
 
-    console.log("mf: ", monstersFound);
-    const monstersFoundList = monstersFound.map((monster) => (
-      <div key={monster.id}>
-        <h1>{monster.name}</h1>
-      </div>
-    ));
+    
 
     return (
       <div className="App">
@@ -59,7 +52,7 @@ class App extends Component {
           value={searchText}
           onChange={handleSearchInputChange}
         />
-        {monstersFoundList}
+        <CardList items={monstersFound} />
       </div>
     );
   }
