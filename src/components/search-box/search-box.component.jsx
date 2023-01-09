@@ -1,10 +1,10 @@
 const SearchBox = (props) => {
     return <input
-    className="search-box"
+    className={props.className}
     type="search"
-    placeholder=""
+    placeholder={props.placeholder}
     value={props.value}
-    onChange={props.onChange}
+    onChange={props.onChangeHandler}
   />;
 };
 

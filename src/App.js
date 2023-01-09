@@ -15,11 +15,9 @@ class App extends Component {
     fetch("https://jsonplaceholder.typicode.com/users")
       .then((response) => response.json())
       .then((users) => {
-        this.setState(
-          () => {
-            return { monsters: users };
-          }
-        );
+        this.setState(() => {
+          return { monsters: users };
+        });
       });
   }
 
@@ -42,12 +40,14 @@ class App extends Component {
       // broader search using includes
     );
 
-    
-
     return (
       <div className="App">
-
-        <SearchBox placeHolder={"search monsters"} onChange={handleSearchInputChange} value={searchText} />
+        <SearchBox
+          className="search-box"
+          placeholder="search monsters"
+          onChangeHandler={handleSearchInputChange}
+          value={searchText}
+        />
         <CardList items={monstersFound} />
       </div>
     );
