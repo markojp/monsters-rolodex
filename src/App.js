@@ -30,7 +30,7 @@ class App extends Component {
   };
 
   render() {
-    console.log("render from AppJS");
+    //console.log("render from AppJS");
 
     const { monsters, searchText } = this.state;
     const { handleSearchInputChange } = this;
