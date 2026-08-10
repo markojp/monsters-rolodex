@@ -2,28 +2,39 @@ import { Component } from 'react';
 
 import './App.css';
 
+const MONSTERS_API = 'https://jsonplaceholder.typicode.com/users';
+
 class App extends Component {
   state = {
-    monsters: [
-      { id: '1egyd', name: 'Jenny' },
-      { id: '2drg', name: 'Zoeye' },
-      { id: '3wyj', name: 'Antwon' },
-      { id: '4shk', name: 'Rhonda' },
-    ],
+    monsters: [],
+  };
+
+  componentDidMount() {
+    this.getMonsters();
+  }
+
+  getMonsters = async () => {
+    try {
+      const response = await fetch(MONSTERS_API);
+      if (!response.ok) throw new Error('Network response was not ok');
+      const monsters = await response.json();
+
+      this.setState(() => ({ monsters }));
+    } catch (error) {
+      console.error('Fetch error:', error);
+    }
   };
 
   render() {
-    const monsters = this.state.monsters;
+    const { monsters } = this.state;
 
     return (
       <div className='App'>
-        {monsters.map((monster) => {
-          return (
-            <div key={monster.id}>
-              <h1>{monster.name}</h1>
-            </div>
-          );
-        })}
+        {monsters.map((monster) => (
+          <div key={monster.id}>
+            <h1>{monster.name}</h1>
+          </div>
+        ))}
       </div>
     );
   }
