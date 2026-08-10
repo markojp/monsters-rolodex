@@ -7,6 +7,7 @@ const MONSTERS_API = 'https://jsonplaceholder.typicode.com/users';
 class App extends Component {
   state = {
     monsters: [],
+    searchtext: '',
   };
 
   componentDidMount() {
@@ -25,12 +26,29 @@ class App extends Component {
     }
   };
 
+  handleSearchChange = (event) => {
+    const searchtext = event.target.value.toLowerCase();
+    this.setState(() => ({ searchtext }));
+  };
+
   render() {
-    const { monsters } = this.state;
+    const { monsters, searchtext } = this.state;
+    const { handleSearchChange } = this;
+
+    const filteredMonsters = monsters.filter((monster) =>
+      monster.name.toLowerCase().includes(searchtext),
+    );
 
     return (
       <div className='App'>
-        {monsters.map((monster) => (
+        <input
+          className='search-box'
+          type='search'
+          placeholder={'search monsters'}
+          value={searchtext}
+          onChange={handleSearchChange}
+        />
+        {filteredMonsters.map((monster) => (
           <div key={monster.id}>
             <h1>{monster.name}</h1>
           </div>
