@@ -4,29 +4,26 @@ import './App.css';
 
 class App extends Component {
   state = {
-    count: 0,
-  };
-
-  handleCountChange = () => {
-    this.setState((state) => {
-      return { count: state.count + 1 };
-    });
+    monsters: [
+      { id: '1egyd', name: 'Jenny' },
+      { id: '2drg', name: 'Zoeye' },
+      { id: '3wyj', name: 'Antwon' },
+      { id: '4shk', name: 'Rhonda' },
+    ],
   };
 
   render() {
-    const count = this.state.count;
-    const incrementCount = this.handleCountChange;
+    const monsters = this.state.monsters;
 
     return (
       <div className='App'>
-        <div>
-          <h1>Hello World</h1>
-          <p>Hello React</p>
-
-          <button type='button' className='counter' onClick={incrementCount}>
-            Count is {count}
-          </button>
-        </div>
+        {monsters.map((monster) => {
+          return (
+            <div key={monster.id}>
+              <h1>{monster.name}</h1>
+            </div>
+          );
+        })}
       </div>
     );
   }
