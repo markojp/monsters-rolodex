@@ -1,11 +1,12 @@
-import { CardItem } from '../card-item/card-item.component';
+import { Card } from '../card/card.component';
+import './card-list.styles.css';
 
 export const CardList = (props) => {
   const { itemlist } = props;
   return (
-    <div>
+    <div className='card-list'>
       {itemlist.map((item) => (
-        <CardItem key={item.id} item={item} />
+        <Card key={item.id} item={item} />
       ))}
     </div>
   );
