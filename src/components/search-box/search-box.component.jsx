@@ -1,10 +1,10 @@
 export const SearchBox = (props) => {
-  const { searchText, onChangeHandler, placeholderValue, className } = props;
+  const { searchText, onChangeHandler, placeholder, className } = props;
   return (
     <input
       className={className}
       type='search'
-      placeholder={placeholderValue}
+      placeholder={placeholder}
       value={searchText}
       onChange={onChangeHandler}
     />
