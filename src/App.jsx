@@ -1,5 +1,6 @@
 import { Component } from 'react';
-
+import { CardList } from './components/card-list/card-list.component';
+import { SearchBox } from './components/search-box/search-box.component';
 import './App.css';
 
 const MONSTERS_API = 'https://jsonplaceholder.typicode.com/users';
@@ -27,7 +28,7 @@ class App extends Component {
   };
 
   handleSearchChange = (event) => {
-    const searchtext = event.target.value.toLowerCase();
+    const searchtext = event.target.value.toLocaleLowerCase();
     this.setState(() => ({ searchtext }));
   };
 
@@ -36,23 +37,18 @@ class App extends Component {
     const { handleSearchChange } = this;
 
     const filteredMonsters = monsters.filter((monster) =>
-      monster.name.toLowerCase().includes(searchtext),
+      monster.name.toLocaleLowerCase().includes(searchtext),
     );
 
     return (
       <div className='App'>
-        <input
+        <SearchBox
           className='search-box'
-          type='search'
-          placeholder={'search monsters'}
+          placeholderValue={'search monsters'}
           value={searchtext}
-          onChange={handleSearchChange}
+          onChangeHandler={handleSearchChange}
         />
-        {filteredMonsters.map((monster) => (
-          <div key={monster.id}>
-            <h1>{monster.name}</h1>
-          </div>
-        ))}
+        <CardList itemlist={filteredMonsters} />
       </div>
     );
   }
