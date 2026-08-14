@@ -1,58 +1,54 @@
-import { Component } from 'react';
+import { useState, useEffect } from 'react';
 import { CardList } from './components/card-list/card-list.component';
 import { SearchBox } from './components/search-box/search-box.component';
 import './App.css';
 
 const MONSTERS_API = 'https://jsonplaceholder.typicode.com/users';
 
-class App extends Component {
-  state = {
-    monsters: [],
-    searchtext: '',
-  };
+const App = () => {
+  const [searchText, setSearchText] = useState('');
+  const [monsters, setMonsters] = useState([]);
+  const [filteredMonsters, setFilteredMonsters] = useState(monsters);
 
-  componentDidMount() {
-    this.getMonsters();
-  }
+  useEffect(() => {
+    const getMonsters = async () => {
+      try {
+        const response = await fetch(MONSTERS_API);
+        if (!response.ok) throw new Error('Network response was not ok');
+        const newMonsters = await response.json();
 
-  getMonsters = async () => {
-    try {
-      const response = await fetch(MONSTERS_API);
-      if (!response.ok) throw new Error('Network response was not ok');
-      const monsters = await response.json();
+        setMonsters(newMonsters);
+      } catch (error) {
+        console.error('Fetch error:', error);
+      }
+    };
+    getMonsters();
+  }, []);
 
-      this.setState(() => ({ monsters }));
-    } catch (error) {
-      console.error('Fetch error:', error);
-    }
-  };
+  useEffect(() => {
+    const newFilteredMonsters = monsters.filter((monster) =>
+      monster.name.toLocaleLowerCase().includes(searchText),
+    );
+    setFilteredMonsters(newFilteredMonsters);
+  }, [monsters, searchText]);
 
-  handleSearchChange = (event) => {
+  const handleSearchChange = (event) => {
     const searchtext = event.target.value.toLocaleLowerCase();
-    this.setState(() => ({ searchtext }));
+    setSearchText(searchtext);
   };
 
-  render() {
-    const { monsters, searchtext } = this.state;
-    const { handleSearchChange } = this;
-
-    const filteredMonsters = monsters.filter((monster) =>
-      monster.name.toLocaleLowerCase().includes(searchtext),
-    );
-
-    return (
-      <div className='App'>
-        <h1>Monsters Rolodex</h1>
-        <SearchBox
-          className='monsters-search-box'
-          placeholder={'search monsters'}
-          searchText={searchtext}
-          onChangeHandler={handleSearchChange}
-        />
-        <CardList itemlist={filteredMonsters} />
-      </div>
-    );
-  }
-}
+  return (
+    <div className='App'>
+      <h1>Monsters Rolodex</h1>
+      <SearchBox
+        className='monsters-search-box'
+        placeholder={'search monsters'}
+        searchText={searchText}
+        onChangeHandler={handleSearchChange}
+      />
+      <CardList itemlist={filteredMonsters} />
+    </div>
+  );
+};
 
 export default App;
